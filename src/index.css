@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@300;400;500;600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* RTL styles inline instead of import */
+
+@layer base {
+  * {
+    @apply antialiased;
+  }
+
+  body {
+    @apply font-sans text-neutral-900 dark:text-neutral-dark-900 bg-background-page dark:bg-background-dark-page;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-neutral-900 dark:text-neutral-dark-900;
+  }
+
+  /* Variables CSS pour les polices arabes */
+  :root {
+    --font-arabic-primary: 'Cairo', 'Noto Naskh Arabic', sans-serif;
+    --font-arabic-serif: 'Amiri', 'Noto Naskh Arabic', serif;
+    --font-arabic-display: 'Amiri', 'Cairo', serif;
+    --font-arabic-ui: 'Cairo', 'Noto Sans Arabic', sans-serif;
+  }
+
+  /* Support RTL pour l'arabe */
+  [lang="ar"] {
+    font-family: var(--font-arabic-primary);
+  }
+
+  [lang="ar"] h1,
+  [lang="ar"] h2,
+  [lang="ar"] h3,
+  [lang="ar"] h4,
+  [lang="ar"] h5,
+  [lang="ar"] h6 {
+    font-family: var(--font-arabic-display);
+  }
+}
+
+@layer utilities {
+  /* Animations de base */
+  .animate-fadeIn {
+    animation: fadeIn 400ms ease-out;
+  }
+
+  .animate-fadeInUp {
+    animation: fadeInUp 500ms ease-out both;
+  }
+
+  .animate-slideInRight {
+    animation: slideInRight 300ms ease-out;
+  }
+
+  .animate-scaleIn {
+    animation: scaleIn 200ms ease-out;
+  }
+
+  /* Skeleton loading */
+  .skeleton {
+    @apply bg-gradient-to-r from-neutral-200 via-neutral-100 to-neutral-200 dark:from-neutral-dark-300 dark:via-neutral-dark-200 dark:to-neutral-dark-300;
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Audio waveform */
+  .waveform {
+    @apply flex items-center gap-1 h-5;
+  }
+
+  .waveform-bar {
+    @apply w-1 bg-gradient-to-t from-gold-700 to-gold-500 rounded-full;
+    animation: wave 1.2s ease-in-out infinite;
+  }
+
+  .waveform-bar:nth-child(1) { animation-delay: 0s; }
+  .waveform-bar:nth-child(2) { animation-delay: 0.1s; }
+  .waveform-bar:nth-child(3) { animation-delay: 0.2s; }
+  .waveform-bar:nth-child(4) { animation-delay: 0.3s; }
+  .waveform-bar:nth-child(5) { animation-delay: 0.4s; }
+
+  /* États du lecteur audio */
+  .audio-player-pulse {
+    animation: audio-pulse 2s infinite;
+  }
+
+  /* Focus visible pour accessibilité */
+  .focus-visible-ring {
+    @apply focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 focus-visible:outline-none;
+  }
+
+  /* Skip link pour accessibilité */
+  .skip-link {
+    @apply absolute -top-full left-4 bg-primary-700 text-white px-4 py-2 rounded-lg z-[100];
+    @apply focus:top-4 transition-all;
+  }
+
+  /* Cibles tactiles minimum (44x44px) */
+  .touch-target {
+    @apply min-w-[44px] min-h-[44px] flex items-center justify-center;
+  }
+
+  .touch-target-small {
+    @apply min-w-[36px] min-h-[36px] flex items-center justify-center;
+  }
+
+  /* Micro-interactions */
+  .button-interactive {
+    @apply transform transition-all duration-200 ease-out;
+    @apply hover:scale-105 hover:shadow-lg;
+    @apply active:scale-95;
+  }
+
+  /* Screen reader only */
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes wave {
+    0%, 100% { height: 4px; }
+    50% { height: 20px; }
+  }
+
+  @keyframes audio-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(45, 90, 61, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(45, 90, 61, 0); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
